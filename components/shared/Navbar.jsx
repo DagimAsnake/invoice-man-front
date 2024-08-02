@@ -1,12 +1,16 @@
 'use client';
 import { useDispatch } from 'react-redux';
 import { Dropdown, Menu, message, Space } from 'antd';
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from 'next/navigation';
 import { logout } from '@/store/authSlice';
 
 const Navbar = () => {
-  const router = typeof window !== 'undefined' ? useRouter() : null;
   const dispatch = useDispatch();
+  const router = useRouter();
+
+  if (typeof window === 'undefined') {
+    return null;
+  }
 
   const onClick = ({ key }) => {
     if (key === '3') {

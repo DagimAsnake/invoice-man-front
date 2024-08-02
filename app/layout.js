@@ -14,7 +14,9 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body>
         <StoreProvider>
-          <Auth children={children} />
+          <Auth>
+            {children}
+          </Auth>
         </StoreProvider>
       </body>
     </html>
