@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const urlDev = process.env.NEXT_PUBLIC_API_URL_DEV
+const urlProd = process.env.NEXT_PUBLIC_API_URL_PROD
+
 const initialState = {
   Invoices: [],
   loading: false,
@@ -17,7 +20,7 @@ export const addInvoice = createAsyncThunk(
         typeof window !== 'undefined' ? localStorage.getItem('token') : null;
       console.log(invoiceData);
       const res = await axios.post(
-        'http://localhost:8000/invoices/',
+        `${urlProd}/invoices/`,
         invoiceData,
         {
           headers: {
@@ -38,7 +41,7 @@ export const getAllInvoice = createAsyncThunk(
   'invoice/getAll',
   async (_, thunkAPI) => {
     try {
-      const res = await axios.get('http://localhost:8000/invoices/');
+      const res = await axios.get(`${urlProd}/invoices/`);
       return res.data.Invoice;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -56,7 +59,7 @@ export const getInvoiceById = createAsyncThunk(
       const token =
       typeof window !== 'undefined' ? localStorage.getItem('token') : null;
       const response = await axios.get(
-        `http://localhost:8000/invoices/${invoiceId}`,
+        `${urlProd}/invoices/${invoiceId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -80,7 +83,7 @@ export const updateInvoice = createAsyncThunk(
       const token =
         typeof window !== 'undefined' ? localStorage.getItem('token') : null;
       const response = await axios.put(
-        `http://localhost:8000/invoices/${invoiceId}`,
+        `${urlProd}/invoices/${invoiceId}`,
         invoiceData,
         {
           headers: {
@@ -104,7 +107,7 @@ export const deleteInvoice = createAsyncThunk(
       const token =
         typeof window !== 'undefined' ? localStorage.getItem('token') : null;
       const response = await axios.delete(
-        `http://localhost:8000/invoices/${invoiceId}`,
+        `${urlProd}/invoices/${invoiceId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

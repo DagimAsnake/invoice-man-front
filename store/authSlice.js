@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const urlDev = process.env.NEXT_PUBLIC_API_URL_DEV
+const urlProd = process.env.NEXT_PUBLIC_API_URL_PROD
+
 const initialState = {
   token: typeof window !== 'undefined' ? localStorage.getItem('token') : null,
   isAuthenticated:
@@ -26,7 +29,7 @@ export const login = createAsyncThunk(
     const body = JSON.stringify({ email, password });
     try {
       const res = await axios.post(
-        'http://localhost:8000/users/login',
+        `${urlProd}/users/login`,
         body,
         config
       );
@@ -60,7 +63,7 @@ export const Register = createAsyncThunk(
     const body = JSON.stringify({ email, password });
     try {
       const res = await axios.post(
-        'http://localhost:8000/users/register',
+        `${urlProd}/users/register`,
         body,
         config
       );
